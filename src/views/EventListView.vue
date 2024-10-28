@@ -24,6 +24,7 @@ onMounted(() => {
   <div class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
   </div>
+  <h3>Lab 8.7</h3>
   <div class="events">
     <EventDetails v-for="event in events" :key="event.id" :event="event" />
   </div>
