@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Information For Student</h1>
+  <h1>Information For Student (need VPN)</h1>
   <!-- new element -->
   <div class="students">
     <StudentCard v-for="event in events" :key="event.id" :event="event" />
