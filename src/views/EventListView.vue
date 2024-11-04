@@ -6,21 +6,25 @@ import EventService from '@/services/EventService'
 
 const events = ref<Event[] | null>(null)
 const totalEvents = ref(0)
+const itemsPerPage = ref(1)
+
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvents.value / 3)
+  const totalPages = Math.ceil(totalEvents.value / itemsPerPage.value)
   return page.value < totalPages
 })
+
 const props = defineProps({
   page: {
     type: Number,
     required: true
   }
 })
+
 const page = computed(() => props.page)
 
 onMounted(() => {
   watchEffect(() => {
-    EventService.getEvents(3, page.value)
+    EventService.getEvents(itemsPerPage.value, page.value)
       .then((response) => {
         events.value = response.data
         totalEvents.value = response.headers['x-total-count']
@@ -30,12 +34,29 @@ onMounted(() => {
       })
   })
 })
+
+const safeItemsPerPage = computed({
+  get: () => itemsPerPage.value.toString(),
+  set: (value) => {
+      const num = parseInt(value, 10)
+      itemsPerPage.value = isNaN(num) || num < 1 ? 1 : num
+
+  }
+})
 </script>
 
 <template>
   <h1 class="text-3xl font-bold text-center my-6">Events For Good</h1>
   <div class="flex flex-col items-center">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
+    <label>Please enter the number of events per page</label>
+    <input
+      v-model="safeItemsPerPage"
+      type="number"
+      min="1"
+      class="border border-gray-300 rounded p-2 mt-4"
+      placeholder="Enter here"
+    />
     <div class="flex justify-between w-full max-w-md mt-4">
       <div class="flex-1 text-left">
         <RouterLink
@@ -66,4 +87,3 @@ onMounted(() => {
 
 <style scoped>
 </style>
-

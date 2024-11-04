@@ -20,8 +20,18 @@ const register = () => {
   }, 3000)
   router.push({ name: 'event-detail-view', params: { id: props.event.id } })
 }
+const edit = () => {
+  // If the registration API call successful
+  // Push back to the event details view
+  store.updateMessage('the data for ' + props.event.title + ' has been updated ')
+  setTimeout(() => {
+  store.resetMessage()
+  }, 3000)
+  router.push({ name: 'event-detail-view', params: { id: props.event.id } })
+}
 </script>
 <template>
   <p>Register event here</p>
-  <button @click="register">Register</button>
+  <button @click="register" :style="{ backgroundColor: '#4CAF50', color: 'white' }"> Register </button> |
+  <button @click="edit" :style="{ backgroundColor: '#008CBA', color: 'white' }"> Update </button>
 </template>
