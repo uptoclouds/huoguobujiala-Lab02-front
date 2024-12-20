@@ -1,13 +1,22 @@
 export interface Event {
   id: number
-  category: string
-  title: string
-  description: string
-  location: string
-  date: string
-  time: string
-  petsAllowed: boolean
-  organizer: string
+  rank: string
+  rankChangeType: string
+  countryName: string
+  goldMedalNum: string
+  silverMedalNum: string
+  bronzeMedalNum: string
+  totalMedalNum: string
+}
+export interface MedalEvent {
+  id: number;
+  countryName: string;
+  medals: string;
+}
+export interface Comment {
+  id: string;
+  text: string;
+  eventId: string;
 }
 export interface StudentEvent {
   id: number

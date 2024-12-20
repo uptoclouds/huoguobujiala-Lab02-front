@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EventListView from '@/views/EventListView.vue'
 import AboutView from '@/views/AboutView.vue'
-import StudentView from '@/views/StudentView.vue'
 import EventDetailView from '@/views/event/DetailView.vue'
 import EventRegisterView from '@/views/event/RegisterView.vue'
 import EventEditView from '@/views/event/EditView.vue'
@@ -27,33 +26,31 @@ const router = createRouter({
       component: AboutView
     },
     {
-      path: '/student',
-      name: 'student',
-      component: StudentView
-    },
-    {
       path: '/event/:id',
       name: 'event-layout-view',
       component: EventLayoutView,
       props: true,
-      beforeEnter: (to) => {
-        const id = parseInt(to.params.id as string)
-        const eventStore = useEventStore()
-        return EventService.getEvent(id)
-          .then((response) => {
-            // need to setup the data for the event
-            eventStore.setEvent(response.data)
-          })
-          .catch((error) => {
-            if (error.response && error.response.status === 404) {
-              return {
-                name: '404-resource-view',
-                params: { resource: 'event' }
-              }
+      beforeEnter: (to, from, next) => {
+        const id = parseInt(to.params.id as string);
+        const eventStore = useEventStore();
+        EventService.getEvent(id)
+          .then(event => {
+            if (event) {
+              // 如果事件存在，设置事件数据
+              eventStore.setEvent(event);
+              next(); // 继续导航
             } else {
-              return { name: 'network-error-view' }
+              next({ name: '404-resource-view', params: { resource: 'event' } }); // 事件不存在，重定向到404页面
             }
           })
+          .catch(error => {
+            const errorMessage = error.message;
+            if (errorMessage === 'Event not found') {
+              next({ name: '404-resource-view', params: { resource: 'event' } }); // 事件不存在，重定向到404页面
+            } else {
+              next({ name: 'network-error-view' }); // 其他错误，重定向到网络错误页面
+            }
+          });
       },
       children: [
         {

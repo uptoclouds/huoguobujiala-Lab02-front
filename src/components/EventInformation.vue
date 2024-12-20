@@ -1,30 +1,15 @@
 <script setup lang="ts">
-//defineProps<{
-//  msg: string
-//}>()
-//import { ref } from 'vue'
 import type { Event } from '@/type'
 defineProps<{
   event: Event
 }>()
-// const event = ref({
-//   id: 5928101,
-//   category: 'animal welfare',
-//   title: 'Cat Adoption Day',
-//   description: 'Find your new feline friend at this event.',
-//   location: 'Meow Town',
-//   date: 'January 28, 2022',
-//   time: '12:00',
-//   petsAllowed: true,
-//   organizer: 'Kat Laydee'
-// })
 </script>
 
 <template>
-<div class="event-class">
+  <div class="event-class">
     <div class="event-details">
-      <h2>{{ event.title }}</h2>
-      <span>@{{ event.category }} on {{ event.organizer }}</span>
+      <h2 class="text-2xl font-semibold">{{ event.countryName }}</h2>
+      <span class="block mt-2">{{ event.countryName }} on {{ event.countryName }}</span>
     </div>
   </div>
 </template>

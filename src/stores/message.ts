@@ -1,15 +1,16 @@
-import type { MessageState } from '@/type'
-import { defineStore } from 'pinia'
-export const useMessageStore = defineStore('message', {
-  state: (): MessageState => ({
-    message: ''
+import { defineStore } from 'pinia';
+import type { Comment } from '@/type';
+
+export const useCommentsStore = defineStore('comments', {
+  state: () => ({
+    comments: [] as Comment[] 
   }),
   actions: {
-    updateMessage(message: string): void {
-      this.message = message
+    addComment(comment: Comment) {
+      this.comments.push(comment);
     },
-    resetMessage(): void {
-      this.message = ''
+    getAllComments() {
+      return this.comments;
     }
   }
-})
+});

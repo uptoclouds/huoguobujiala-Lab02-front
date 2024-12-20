@@ -1,47 +1,27 @@
 <script setup lang="ts">
-//defineProps<{
-//  msg: string
-//}>()
-//import { ref } from 'vue'
 import { type Event } from '@/type'
 defineProps<{
   event: Event
 }>()
-// const event = ref({
-//   id: 5928101,
-//   category: 'animal welfare',
-//   title: 'Cat Adoption Day',
-//   description: 'Find your new feline friend at this event.',
-//   location: 'Meow Town',
-//   date: 'January 28, 2022',
-//   time: '12:00',
-//   petsAllowed: true,
-//   organizer: 'Kat Laydee'
-// })
 </script>
-
 <template>
   <RouterLink class="event-link" :to="{ name: 'event-detail-view', params: { id: event.id } }">
-    <div class="cursor-pointer border border-gray-600 p-[20px] w-[250px] mb-[18px] hover:scale-101 hover:shadow-sp">
-      <h2>{{ event.title }}</h2>
-      <span>@{{ event.time }} on {{ event.date }}</span>
+    <div class="cursor-pointer border border-gray-600 p-10 w-[1200px] mb-4 hover:scale-105 hover:shadow-lg bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg">
+      <div class="flex flex-row items-center">
+        <h2 class="text-2xl font-semibold mb-2">{{ event.countryName }}</h2>
+        <div class="flex flex-row items-start space-y-2">
+          <span class="font-medium">Rank: {{ event.rank }}</span>
+          <span class="font-medium">Total Medals: {{ event.totalMedalNum }}</span>
+          <span class="font-medium">Gold Medals: {{ event.goldMedalNum }}</span>
+          <span class="font-medium">Silver Medals: {{ event.silverMedalNum }}</span>
+          <span class="font-medium">Bronze Medals: {{ event.bronzeMedalNum }}</span>
+        </div>
+      </div>
     </div>
   </RouterLink>
 </template>
 
 <style scoped>
-.event-card {
-  padding: 20px;
-  width: 250px;
-  cursor: pointer;
-  border: 1px solid #39495c;
-  margin-bottom: 18px;
-}
-.event-card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
-}
-
 .event-link {
   text-decoration: none;
   color: #2c3e50;
